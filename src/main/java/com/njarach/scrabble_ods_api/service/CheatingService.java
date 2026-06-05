@@ -42,16 +42,15 @@ public class CheatingService {
 
     private void generateCombinations(List<String> remainingLetters, String current, Set<String> result) {
 
-        String stringifiedRemainingLetters = remainingLetters.toString();
-        if (!current.isEmpty()  && this.wordRepository.existsWordByLetters(stringifiedRemainingLetters)) {
+        if (!current.isEmpty()  && this.wordRepository.existsWordByLetters(current)) {
             result.add(current);
         }
 
         for (int i = 0; i < remainingLetters.size(); i++) {
-            List<String> newRemainingLetters = remainingLetters;
-            newRemainingLetters.remove(i);
+            List<String> newRemainingLetters = new ArrayList<>(remainingLetters);
+            String letter = newRemainingLetters.remove(i); // Ceci retire, ET récupère la lettre, donc on peut ensuite concaténer
 
-            this.generateCombinations(newRemainingLetters,"".concat(current),result);
+            this.generateCombinations(newRemainingLetters,current + letter,result);
         }
     }
 }

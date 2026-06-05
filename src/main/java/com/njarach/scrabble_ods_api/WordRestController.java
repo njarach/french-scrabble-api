@@ -3,6 +3,7 @@ package com.njarach.scrabble_ods_api;
 import com.njarach.scrabble_ods_api.service.CheatingService;
 import com.njarach.scrabble_ods_api.service.WordService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,12 +23,12 @@ class WordRestController {
     }
 
     @GetMapping("/check")
-    public boolean check(String letters) {
+    public boolean check(@RequestParam String letters) {
         return this.wordService.wordExists(letters);
     }
 
     @GetMapping("/cheat")
-    public Set<String> cheat(String letters) {
+    public Set<String> cheat(@RequestParam String letters) {
         return this.cheatingService.cheat(letters);
     }
 }
