@@ -11,11 +11,11 @@ public class WordService {
     }
 
     public boolean wordExists(String letters) {
-        return wordRepository.existsWordByLetters(letters);
+        return wordRepository.existsWordByLetters(letters.toUpperCase());
     }
 
     // This will be useful for the god-forsaken cheating feature
     public String findWordByLetters(String letters) {
-        return wordRepository.findWordByLetters(letters).getLetters();
+        return wordRepository.findWordByLetters(letters.toUpperCase()).getLetters();
     }
 }
