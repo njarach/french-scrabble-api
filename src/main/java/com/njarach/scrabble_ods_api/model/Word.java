@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Word {
+
+    // Constructeur utile ici pour définir facilement letters. Le constructeur vide généré par Lombok est utile pour JPA
+    public Word(String letters) {
+        this.letters = letters;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
