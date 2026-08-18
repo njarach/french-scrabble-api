@@ -1,6 +1,5 @@
 package com.njarach.scrabble_ods_api.service;
 
-import com.njarach.scrabble_ods_api.repository.WordRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -8,41 +7,40 @@ import java.util.*;
 @Service
 public class CheatingService {
 
-    private final WordRepository wordRepository;
+    private final WordService wordService;
 
-    public CheatingService(WordRepository wordRepository) {
-        this.wordRepository = wordRepository;
+    public CheatingService(WordService wordService) {
+        this.wordService = wordService;
     }
 
     /* My memo for this :
     - I need to split the letters arg into an array of letters
-    - I need to initialize an empty array result
+    - I need to initialize an empty Set result because I don't want duplicates
     - I need to generate all the possible combinations with a recursive function that checks for words against the db and
-    populate the empty result array. The result array is an ArrayList<String>
-    - I need to return the result. I need to pass array_unique if I have the same letter in letters multiple times
-    - Now to the recursive : it takes 3 arguments -> the array of remaining letters, the current letter, the results array
-    to keep populating it
-    - It works by first checking the current letter(s) combo. If it's valid (exists)and not empty ("") it adds to the
-     result array. Reminder that java uses Objects so even if passed-by-value, I still point to the 'reference' (semantics trap)
-     - Then it loops on the remaining letters, by index=>value. It takes those remaining values, and makes a new remaining
-     array by unsetting the current index from it. It then calls for the recursive function again which takes in args
-     the new remaining array, the current (reminder current starts as an empty "") + appends the value (letter), and then
-     the array result by reference.
+    populate results.
+    - Recursive takes 3 arguments -> remaining letters, current letter(s), results Set (to keep populating it)
+    - 1.First check if current letter(s) exist in scrabble dictionnary and if yes add it to results
+    - 2 For all remaining letters, do it recursively as long as there are remaining letters.
+    - 3 ie : 'enoz' -> e ? en ? eno ? enz ? enoz ? enzo ? eo ? eon ? eoz ? eonz ? eozn ? ez ? ezo ? ezn ? ezon ? ezno ?
+        n ? no ? noz ? noe ? noze ? noez ? nz ? nze ? nzo ? nzeo ? nzoe ? ne ? nez ? neo ? nezo ? neoz ?
+        o ? oe ? oen ? oez ? oezn ? oenz ? on ? onz ? one ? onze ? onez ? oz ? oze ? ozn ? ozen ? ozne ?
+        z ? ze ? zen ? zne ? zeno ? zeon ? zn ? zne ? zno ? zneo ? znoe ? zo ? zoe ? zon ? zoen ? zone ?
      */
 
     public Set<String> cheat(String letters) {
         List<String> arrayOfLetters = new ArrayList<>(Arrays.asList(letters.split("")));
+        System.out.println(arrayOfLetters);
         // Reminder, Set ensures no duplicates
-       Set<String> result = new HashSet<>();
+       Set<String> result = new HashSet<String>();
 
        this.generateCombinations(arrayOfLetters,"", result);
-
        return result;
     }
 
     private void generateCombinations(List<String> remainingLetters, String current, Set<String> result) {
 
-        if (!current.isEmpty()  && this.wordRepository.existsWordByLetters(current)) {
+        if (this.wordService.wordExists(current)) {
+            System.out.println(current);
             result.add(current);
         }
 

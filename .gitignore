@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/ods9.txt
-data/
+data/ods9db.mv.db
