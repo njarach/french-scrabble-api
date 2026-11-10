@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScrabbleOdsApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ScrabbleOdsApiApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(ScrabbleOdsApiApplication.class, args);
+  }
 }
