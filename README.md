@@ -20,6 +20,8 @@ API REST Spring Boot à vocation éducative, permettant de vérifier et trouver 
 
 Les routes `/api/words/**` nécessitent un jeton transmis dans l'en-tête `Authorization: Bearer <token>`. Les mots de passe sont stockés sous forme hachée avec BCrypt. Le nom d'utilisateur doit faire 3 à 30 caractères ; le mot de passe doit faire 8 à 72 caractères.
 
+La recherche `/api/words/cheat` accepte de 1 à 7 lettres, conformément à un chevalet de Scrabble. Les recherches de plus de 7 lettres sont refusées avec une réponse HTTP 400.
+
 Exemple d'inscription ou de connexion :
 
 ```json
