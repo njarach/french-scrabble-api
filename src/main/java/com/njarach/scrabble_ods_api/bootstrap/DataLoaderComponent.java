@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /*On utilise ceci pour créer le jeu de données en dev local. On pourrait créer un fichier sql qui s'exécute auto avec
 un jeu de données tests, mais on veut utiliser l'appli 100% en local aussi potentiellement. */
 @Component
+@Profile("!test")
 class DataLoaderComponent implements CommandLineRunner {
   private final WordRepository wordRepository;
 
