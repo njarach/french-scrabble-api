@@ -17,8 +17,9 @@ public class CheatingService {
   }
 
   public Set<String> cheat(String letters) {
-    if (letters == null || letters.isBlank()) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fournissez au moins une lettre");
+    if (letters == null || !letters.matches("(?iu)[\\p{L}]+")) {
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Fournissez uniquement des lettres");
     }
     if (letters.codePointCount(0, letters.length()) > MAX_TILES) {
       throw new ResponseStatusException(
