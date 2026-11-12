@@ -1,4 +1,4 @@
-package com.njarach.scrabble_ods_api.service;
+package com.njarach.scrabble_ods_api.bootstrap;
 
 import com.njarach.scrabble_ods_api.model.Word;
 import com.njarach.scrabble_ods_api.repository.WordRepository;
