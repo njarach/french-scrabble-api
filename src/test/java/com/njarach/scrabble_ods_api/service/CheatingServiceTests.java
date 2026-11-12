@@ -46,4 +46,21 @@ class CheatingServiceTests {
 
     assertEquals(400, exception.getStatusCode().value());
   }
+
+  @Test
+  void cheatRejectsNonLetterInputBeforeSearching() {
+    WordService wordService =
+        new WordService(null) {
+          @Override
+          public boolean wordExists(String letters) {
+            throw new AssertionError("Aucune recherche ne doit démarrer");
+          }
+        };
+
+    ResponseStatusException exception =
+        assertThrows(
+            ResponseStatusException.class, () -> new CheatingService(wordService).cheat("AB1"));
+
+    assertEquals(400, exception.getStatusCode().value());
+  }
 }

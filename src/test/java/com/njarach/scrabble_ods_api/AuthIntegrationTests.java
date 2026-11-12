@@ -97,6 +97,23 @@ class AuthIntegrationTests {
         .andExpect(status().isBadRequest());
   }
 
+  @Test
+  void registrationRejectsNullAndOversizedCredentials() throws Exception {
+    mockMvc
+        .perform(
+            post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":null,\"password\":\"motdepasse123\"}"))
+        .andExpect(status().isBadRequest());
+
+    mockMvc
+        .perform(
+            post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(credentials("joueur-valide", "é".repeat(37))))
+        .andExpect(status().isBadRequest());
+  }
+
   private String credentials(String username, String password) {
     return "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
   }
